@@ -1,51 +1,32 @@
-// const WHITE_KEYS = ['z', 'x', 'c', 'v', 'b', 'n', 'm']
-// const BLACK_KEYS = ['s', 'd', 'g', 'h', 'j']
-
-// const keys = document.querySelectorAll('.key')
-// const whiteKeys = document.querySelectorAll('.key.white')
-// const blackKeys = document.querySelectorAll('.key.black')
-
-// keys.forEach(key => {
-//   key.addEventListener('click', () => playNote(key))
-// })
-
-// document.addEventListener('keydown', e => {
-//   if (e.repeat) return
-//   const key = e.key
-//   const whiteKeyIndex = WHITE_KEYS.indexOf(key)
-//   const blackKeyIndex = BLACK_KEYS.indexOf(key)
-
-//   if (whiteKeyIndex > -1) playNote(whiteKeys[whiteKeyIndex])
-//   if (blackKeyIndex > -1) playNote(blackKeys[blackKeyIndex])
-// })
-
-// function playNote(key) {
-//   const noteAudio = document.getElementById(key.dataset.note)
-//   noteAudio.currentTime = 0
-//   noteAudio.play()
-//   key.classList.add('active')
-//   noteAudio.addEventListener('ended', () => {
-//     key.classList.remove('active')
-//   })
-// }
-
-//Make background color and sound for keys
+//Make sound of mouse click
 const chords = document.querySelectorAll(".key");
 
-const keyDown = (evt) => {
-  evt.target.style.backgroundColor = "gray";
-  const noteAudio = document.getElementById(evt.target.dataset.note);
-  noteAudio.currentTime = 0;
-  noteAudio.play();
-};
+function playChords(key) {
+  const chordeAudio = document.getElementById(key.dataset.note);
+  chordeAudio.currentTime = 0;
+  chordeAudio.play();
+  key.classList.add("active");
+  chordeAudio.addEventListener("ended", () => {
+    key.classList.remove("active");
+  });
+}
 
-const keyUp = (evt) => {
-  evt.target.style.backgroundColor = "";
-};
+chords.forEach((chord) => {
+  chord.onmousedown = () => {
+    playChords(chord);
+  };
+});
 
-const keyPress = (chord) => {
-  chord.onmousedown = keyDown;
-  chord.onmouseup = keyUp;
-};
+// Make sound of keypress
+const keysButton = ["z", "x", "c"];
 
-chords.forEach(keyPress);
+document.addEventListener("keydown", (evt) => {
+  if (evt.repeat) {
+    return;
+  }
+  const key = evt.key;
+  const keyIndex = keysButton.indexOf(key);
+  if (keyIndex > -1) {
+    playChords(chords[keyIndex]);
+  }
+});
