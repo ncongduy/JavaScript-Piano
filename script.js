@@ -18,7 +18,7 @@ chords.forEach((chord) => {
 });
 
 // Make sound of keypress
-const keysButton = ["z", "x", "c"];
+const keysButton = ["z", "x", "c", "v", "b", "n"];
 
 document.addEventListener("keydown", (evt) => {
   if (evt.repeat) {
